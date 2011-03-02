@@ -1,0 +1,13 @@
+Writing to avro files:
+    Uncompressed: 760s
+    Compressed: 773s
+
+Calculating Statistics:
+    Average: 235
+    Standard Deviation: 446.7
+    Performance:
+        CSV: 15.2s
+        Avro, uncompressed: 853s
+        Avro, compressed: 831s
+
+No, I don't think that the data is very surprising. It's obvious from the times taken to read/write to avro (either uncompressed or compressed) compared to that of the pure csv that somehow the avro library has a lot of extra overhead. However, I was a little surprised that the time taken to write the compressed avro was so similar to the time taken to write the uncompressed version, I would have thought it would take more time to do encoding/decoding/compression calculations and operations (and same for reading the avro files). Why doesn't everyone compress their files, then, if there's no time disadvantage?

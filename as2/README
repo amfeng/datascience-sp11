@@ -1,0 +1,16 @@
+Assumptions:
+
+1. For clean.py, the input is "votes.csv" and the output is "votes_clean.csv"
+
+$ python clean.py
+
+2. For to_avro.py, the input is "votes_clean.csv" and the output is "votes_clean.avro" or "votes_clean.avroc" for the compressed version. Use the flag -c to toggle compressed or uncompressed
+
+$ python to_avro.py 
+$ python to_avro.py -c
+
+3. For stats.py, the input is either a .csv file, .avro, or .avroc (compressed avro). The python script takes one argument with the file name and parses the file extension (must be one of .csv, .avro, or .avroc)
+
+$ python stats.py votes_clean.avro
+
+

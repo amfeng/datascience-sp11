@@ -1,0 +1,8 @@
+To store the data more efficiently, we can:
+
+1. Notice that there are only two values (1 and -1) for the votes column. This means that we only need one bit (boolean value) instead of 32 bits (integer) to store this value.
+2. This means that the votes column is a fixed width, and if we look at the format of the url we can notice that the urls all have a fixed width of 8. Even though the username has a variable width, we have introduced significant savings with the other two columns.
+3. To save space on the variable width usernames, we can sort the currently unsorted data by users to avoid repeating username (saving an average of 235 * string size bit, since in the last part we calculated the average number of votes per user to be 235)
+4. I still believe the file should be stored row-wise instead of column-wise for efficient traversal and parsing.
+
+Right now, there are around 7.3 million rows in the csv, each row taking up 8*8 (username estimated to be max of 8 characters under variable width scheme) + 8*8 (url estimated to be max of 8 characters under variable width scheme) + 32 (vote) = 160 bits per row. 160 bits * 7.3 million = ~1.15 billion bits = ~150MB. Using my proposed compression scheme, we only need (8*8 bits * 7.3 million/235 votes per user) (user) + 8 * 8 * 7.3 million (url) + 1 * 7.3 million (votes) = ~477,000,000 bits = ~69MB.
