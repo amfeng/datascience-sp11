@@ -10,10 +10,7 @@ class MainHandler(tornado.web.RequestHandler):
 
 class GraphHandler(tornado.web.RequestHandler):
     def get(self, graph_id):
-        if graph_id == "flare":
-            self.render("flare.html", title="")
-        elif graph_id == "stackedcal":
-            self.render("stackedcal.html", title="")
+        self.render(graph_id + ".html", title="")
 
 class DataHandler(tornado.web.RequestHandler):
     def get(self, data_id):
@@ -21,8 +18,11 @@ class DataHandler(tornado.web.RequestHandler):
         raw = []
         data = None
         read = open('cereal.csv', 'r+')
+        def toFloat(x):
+            return float(x)
         for line in read:
             sep = line.rstrip("\n").split(" ")
+            sep[3:] = map(toFloat, sep[3:])
             raw.append(sep)
         
         if data_id == "flare":
@@ -50,9 +50,9 @@ class DataHandler(tornado.web.RequestHandler):
             for item in raw:
                 man = item[1]
                 protein = float(item[4])
-                fat = float(item[5])
-                cal = float(item[3])
-                carb = float(item[8])
+                fat = item[5]
+                cal = item[3]
+                carb = item[8]
                 
                 bucket = data_calc.setdefault(man, ([],[],[],[]))
                 bucket[0].append(protein)
@@ -82,7 +82,13 @@ class DataHandler(tornado.web.RequestHandler):
             data.append(protein)
             data.append(fat)
             data.append(carb)
-
+        elif data_id == "heat":
+            def shift(x):
+                d = [x[0]]
+                d.extend(x[3:])
+                return d
+            data = map(shift, raw)
+            data.insert(0, ["NAME", "CAL", "PROTEIN", "FAT", "SODIUM", "FIBER", "CARB", "SUGAR", "SHELF", "POTAS", "VITA", "WEIGHT", "CUP/S"])
         else:
 
             data = []
