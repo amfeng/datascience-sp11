@@ -43,19 +43,51 @@ class DataHandler(tornado.web.RequestHandler):
                 if cereal_type == "H": cereal_type = "Hot Cereal"
                 elif cereal_type == "C": cereal_type = "Cold Cereal"
 
-                data.setdefault(cereal_man, {}).setdefault(cereal_type, {})[cereal_name] = 8000 
+                data.setdefault(cereal_man, {}).setdefault(cereal_type, {})[cereal_name] = 0
         elif data_id == "stackedcal":
             data = []
+            data_calc = {}
             for item in raw:
-                cal = item[3]
-                data.append(cal)
+                man = item[1]
+                protein = float(item[4])
+                fat = float(item[5])
+                cal = float(item[3])
+                carb = float(item[8])
+                
+                bucket = data_calc.setdefault(man, ([],[],[],[]))
+                bucket[0].append(protein)
+                bucket[1].append(fat)
+                bucket[2].append(carb)
+                bucket[3].append(cal)
+            
+            protein = []
+            fat = []
+            carb = []
+            cal = []
+            man = []
+
+            print data_calc
+            for key in data_calc:
+                man.append(key)
+
+            def average(values):
+                return sum(values, 0.0)/len(values)
+            
+            for key, value in data_calc.iteritems():
+                protein.append(average(value[0]))
+                fat.append(average(value[1]))
+                carb.append(average(value[2]))
+                cal.append(average(value[3]))
+
+            data.append(protein)
+            data.append(fat)
+            data.append(carb)
+
         else:
 
             data = []
         self.write(tornado.escape.json_encode(data))
 
-    def average(values):
-        return sum(values, 0.0)/len(values)
 
 settings = {
     "static_path": os.path.join(os.path.dirname(__file__), "static")
