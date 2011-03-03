@@ -9,40 +9,50 @@ class MainHandler(tornado.web.RequestHandler):
         self.render("index.html", title="Cereal Data Visualization")
 
 class DataHandler(tornado.web.RequestHandler):
-    def get(self):
+    def get(self, data_id):
         #Parse and package data
-        data = []
-        flare = {}
+        raw = []
+        data = None
         read = open('cereal.csv', 'r+')
         for line in read:
             sep = line.rstrip("\n").split(" ")
-            data.append(sep)
-        for item in data:
-            cereal_name = item[0].replace("_", " ")
-            cereal_man = item[1]
-            cereal_type = item[2]
+            raw.append(sep)
+        
+        if data_id == "flare":
+            data = {}
+            for item in raw:
+                cereal_name = item[0].replace("_", " ")
+                cereal_man = item[1]
+                cereal_type = item[2]
 
-            if cereal_man is "A": cereal_man = "AAHF Products"
-            elif cereal_man is "G": cereal_man = "General Mill"
-            elif cereal_man is "K": cereal_man = "Kellogs"
-            elif cereal_man is "N": cereal_man = "Nabisco"
-            elif cereal_man is "P": cereal_man = "Post"
-            elif cereal_man is "Q": cereal_man = "Quaker Oats"
-            elif cereal_man is "R": cereal_man = "Ralston Purina"
+                if cereal_man == "A": cereal_man = "AAHF Products"
+                elif cereal_man == "G": cereal_man = "General Mill"
+                elif cereal_man == "K": cereal_man = "Kellogs"
+                elif cereal_man == "N": cereal_man = "Nabisco"
+                elif cereal_man == "P": cereal_man = "Post"
+                elif cereal_man == "Q": cereal_man = "Quaker Oats"
+                elif cereal_man == "R": cereal_man = "Ralston Purina"
 
-            if cereal_type is "H": cereal_type = "Hot Cereal"
-            elif cereal_type is "C": cereal_type = "Cold Cereal"
+                if cereal_type == "H": cereal_type = "Hot Cereal"
+                elif cereal_type == "C": cereal_type = "Cold Cereal"
 
-            flare.setdefault(cereal_man, {}).setdefault(cereal_type, {})[cereal_name] = 8000 
+                data.setdefault(cereal_man, {}).setdefault(cereal_type, {})[cereal_name] = 8000 
+        elif data_id == "stackedcal":
+            data = []
+            for item in raw:
+                cal = item[3]
+                data.append(cal)
+        else:
 
-        self.write(tornado.escape.json_encode(flare))
+            data = []
+        self.write(tornado.escape.json_encode(data))
 
 settings = {
     "static_path": os.path.join(os.path.dirname(__file__), "static")
 }
 application = tornado.web.Application([
     (r"/", MainHandler),
-    (r"/data", DataHandler)
+    (r"/data/([a-z]+)", DataHandler)
 ], **settings)
 
 if __name__ == "__main__":
