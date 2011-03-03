@@ -8,6 +8,13 @@ class MainHandler(tornado.web.RequestHandler):
         #self.write("Hello, world")
         self.render("index.html", title="Cereal Data Visualization")
 
+class GraphHandler(tornado.web.RequestHandler):
+    def get(self, graph_id):
+        if graph_id == "flare":
+            self.render("flare.html", title="")
+        elif graph_id == "stackedcal":
+            self.render("stackedcal.html", title="")
+
 class DataHandler(tornado.web.RequestHandler):
     def get(self, data_id):
         #Parse and package data
@@ -47,12 +54,16 @@ class DataHandler(tornado.web.RequestHandler):
             data = []
         self.write(tornado.escape.json_encode(data))
 
+    def average(values):
+        return sum(values, 0.0)/len(values)
+
 settings = {
     "static_path": os.path.join(os.path.dirname(__file__), "static")
 }
 application = tornado.web.Application([
     (r"/", MainHandler),
-    (r"/data/([a-z]+)", DataHandler)
+    (r"/data/([a-z]+)", DataHandler),
+    (r"/graph/([a-z]+)", GraphHandler)
 ], **settings)
 
 if __name__ == "__main__":
