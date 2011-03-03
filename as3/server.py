@@ -20,15 +20,18 @@ class DataHandler(tornado.web.RequestHandler):
         read = open('cereal.csv', 'r+')
         def toFloat(x):
             return float(x)
+        def removeUnderscore(x):
+            return x.replace("_", " ")
         for line in read:
             sep = line.rstrip("\n").split(" ")
+            sep[0:3] = map(removeUnderscore, sep[0:3])
             sep[3:] = map(toFloat, sep[3:])
             raw.append(sep)
         
         if data_id == "flare":
             data = {}
             for item in raw:
-                cereal_name = item[0].replace("_", " ")
+                cereal_name = item[0]
                 cereal_man = item[1]
                 cereal_type = item[2]
 
