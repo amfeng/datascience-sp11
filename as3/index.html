@@ -1,19 +1,50 @@
 <html>
 <head>
 <style type="text/css">
+body{
+    padding-top: 1em;
+    padding-bottom: 1em;
+    font-family: Helvetica, Arial, Verdana, serif;
+    font-size: 0.9em;
+    color: #555;
+    background: #eee;
+}
+h1, h2{
+    text-align: center;
+}
 iframe {
-    border: 0px;
+    border: none;
+}
+
+div.container {
+    width: 1150px;
+    margin: auto;
+    margin-bottom: 10px;
+}
+
+div.graph {
+    border: 1px solid #ccc;
+    background: white;
 }
 </style>
 </head>
 <body>
-<h1>Cereal Visualization</h1>
-<div>
-    <iframe scrolling="no" width="800px" height="500px" src="/graph/stackedcal"></iframe>
+<h1><u>Cereal Visualization</u> by Amber Feng</h1>
+<div class="container">
+    <div class="graph">
+        <h2>Comparison of Protein, Fat, and Carbohydrates (in grams) for the 7 major cereal manufacturers</h2>
+        <iframe scrolling="no" width="700px" height="500px" src="/graph/stackedcal"></iframe>
+    </div>
 </div>
-<div>
-    <iframe scrolling="no" width="400px" height="700px" src="/graph/flare"></iframe>
-    <iframe scrolling="no" width="600px" height="700px" src="/graph/heat"></iframe>
+<div class="container">
+    <div class="graph" style="float: left;">
+        <h2>Hierarchy of Cereal</h2>
+        <iframe scrolling="no" width="500px" height="900px" src="/graph/flare"></iframe>
+    </div>
+    <div class="graph" style="float: left; margin-left: 10px;">
+        <h2>Visual Heatmap of Cereal Nutrition</h2>
+        <iframe scrolling="no" width="636px" height="1250px" src="/graph/heat"></iframe>
+    </div>
 </div>
 </body>
 </html>
