@@ -69,7 +69,6 @@ class DataHandler(tornado.web.RequestHandler):
             cal = []
             man = []
 
-            print data_calc
             for key in data_calc:
                 man.append(key)
 
