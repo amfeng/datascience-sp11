@@ -47,8 +47,9 @@ class DataHandler(tornado.web.RequestHandler):
                 elif cereal_type == "C": cereal_type = "Cold Cereal"
 
                 data.setdefault(cereal_man, {}).setdefault(cereal_type, {})[cereal_name] = 0
-        elif data_id == "stackedcal":
+        elif data_id in ["calories", "protein", "fat", "carb"]:
             data = []
+            data_indv = []
             data_calc = {}
             for item in raw:
                 man = item[1]
@@ -63,10 +64,6 @@ class DataHandler(tornado.web.RequestHandler):
                 bucket[2].append(carb)
                 bucket[3].append(cal)
             
-            protein = []
-            fat = []
-            carb = []
-            cal = []
             man = []
 
             for key in data_calc:
@@ -76,14 +73,13 @@ class DataHandler(tornado.web.RequestHandler):
                 return sum(values, 0.0)/len(values)
             
             for key, value in data_calc.iteritems():
-                protein.append(average(value[0]))
-                fat.append(average(value[1]))
-                carb.append(average(value[2]))
-                cal.append(average(value[3]))
+                if data_id == "protein": data_indv.append(average(value[0]))
+                elif data_id == "fat": data_indv.append(average(value[1]))
+                elif data_id == "carb": data_indv.append(average(value[2]))
+                elif data_id == "calories": data_indv.append(average(value[3]))
 
-            data.append(protein)
-            data.append(fat)
-            data.append(carb)
+            data.append(data_indv)
+            data.append(man)
         elif data_id == "heat":
             def shift(x):
                 d = [x[0]]

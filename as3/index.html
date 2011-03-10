@@ -9,6 +9,24 @@ body{
     color: #555;
     background: #eee;
 }
+
+a {
+    color: #444;
+}
+
+.clear{
+    clear: both;
+}
+
+#logo{
+    width: 900px;
+    height: 106px;
+    background: url('/static/logo.png');
+    margin: auto;
+}
+#logo h1{
+    text-indent: -9999px;
+}
 h1, h2{
     text-align: center;
 }
@@ -17,7 +35,7 @@ iframe {
 }
 
 div.container {
-    width: 1150px;
+    width: 1050px;
     margin: auto;
     margin-bottom: 10px;
 }
@@ -26,25 +44,45 @@ div.graph {
     border: 1px solid #ccc;
     background: white;
 }
+
+div.footer{
+    text-align: center;
+}
 </style>
 </head>
 <body>
-<h1><u>Cereal Visualization</u> by Amber Feng</h1>
+<div id="logo">
+    <h1><u>Cereal Visualization</u> by Amber Feng</h1>
+</div>
 <div class="container">
     <div class="graph">
         <h2>Comparison of Protein, Fat, and Carbohydrates (in grams) for the 7 major cereal manufacturers</h2>
-        <iframe scrolling="no" width="700px" height="500px" src="/graph/stackedcal"></iframe>
+        <div style="float:left;">
+            <iframe id="barchart" scrolling="no" width="700px" height="500px" src="/graph/stackedcal"></iframe>
+            <div id="bar-changer">
+                <span class="bar-item current">Calories</span>
+                <span class="bar-item">Protein</span>
+                <span class="bar-item">Fat</span>
+                <span class="bar-item">Carbohydrates</span>
+            </div>
+        </div>
+        
+        <div class="clear"></div>
     </div>
 </div>
 <div class="container">
     <div class="graph" style="float: left;">
-        <h2>Hierarchy of Cereal</h2>
+        <h2>Hierarchy of Cereal Brands</h2>
         <iframe scrolling="no" width="500px" height="900px" src="/graph/flare"></iframe>
     </div>
     <div class="graph" style="float: left; margin-left: 10px;">
         <h2>Visual Heatmap of Cereal Nutrition</h2>
-        <iframe scrolling="no" width="636px" height="1250px" src="/graph/heat"></iframe>
+        <iframe scrolling="no" width="536px" height="1250px" src="/graph/heat"></iframe>
     </div>
+    <div class="clear"></div>
+</div>
+<div class="footer">
+Design by <a href="http://www.amberfeng.com">Amber Feng</a>, Graph API by <a href="http://vis.stanford.edu/protovis/">Protovis</a>, Data set by <a href="http://datascienc.es">CS194-16 Spring 2011, UC Berkeley</a>
 </div>
 </body>
 </html>

@@ -25,11 +25,11 @@ var x = pv.dict(cols, function(f) pv.mean(data, function(d) d[f])),
     s = pv.dict(cols, function(f) pv.deviation(data, function(d) d[f])),
  fill = pv.dict(cols, function(f) pv.Scale.linear()
         .domain(-3 * s[f] + x[f], 3 * s[f] + x[f])
-        .range("white", "steelblue"));
+        .range("white", "#DEBD00"));
 console.log(x);
 console.log(s);
 /* The cell dimensions. */
-var w = 30, h = 15;
+var w = 20, h = 15;
 
 var vis = new pv.Panel()
     .width(cols.length * w)
