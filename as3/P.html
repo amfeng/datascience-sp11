@@ -51,7 +51,7 @@ bullet.anchor("left").add(pv.Label)
     .textStyle("#666")
     .textAlign("right")
     .textBaseline("top")
-    .text(function(d) d.subtitle);
+    .text(function(d) d[3]);
 
 vis.render();
 
