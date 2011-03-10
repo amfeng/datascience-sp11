@@ -54,15 +54,67 @@ div#bar-changer {
     margin-left: 75px;
     padding: 20px;
 }
+
+div#bullet-changer {
+    float:left;
+    margin-top: 55px;
+}
 span.bar-item{
     padding: 7px;
     margin-right: 2em;
     cursor: pointer;
 }
+
+span.bar-item:hover{
+    text-decoration: underline;
+}
 span.current{
     background: #dedede;
     border-radius: 7px;
+    opacity: 1 !important;
 }
+
+span.bullet-item{
+    display: block;
+    margin-bottom: 0.5em;
+    padding: 5px;
+    cursor: pointer;
+    opacity: 0.5;
+}
+
+span.bullet-item:hover{
+    opacity: 1;
+}
+
+span.legend-item{
+    display: block;
+    width: 15px;
+    height: 15px;
+    text-indent: -9999px;
+}
+
+span#a span.legend-item{
+    background: #F07F97;
+}
+span#g span.legend-item{
+    background: #F2B968; 
+}
+span#k span.legend-item{
+    background: #FFE28A;
+}
+span#n span.legend-item{
+    background: #ADD164;
+}
+span#q span.legend-item{
+    background: #9ED5DE;
+}
+span#p span.legend-item{
+    background: #6D93C9;
+}
+span#r span.legend-item{
+    background: #C29EDE;
+}
+
 </style>
 <script type="text/javascript">
 $(document).ready(function(){
@@ -70,6 +122,12 @@ $(document).ready(function(){
         $(".bar-item").removeClass("current");
         $(this).addClass("current");
         $("#barchart").attr("src", "/graph/" + $(this).attr("id"));
+    });
+    
+    $(".bullet-item").click(function(){
+        $(".bullet-item").removeClass("current");
+        $(this).addClass("current");
+        $("#bulletchart").attr("src", "/graph/" + $(this).attr("id"));
     });
 
 });
@@ -83,7 +141,7 @@ $(document).ready(function(){
     <div class="graph">
         <h2>Comparison of Protein, Fat, and Carbohydrates (in grams) for the 7 major cereal manufacturers</h2>
         <div style="float:left; margin-left: 1em;">
-            <iframe id="barchart" scrolling="no" width="600px" height="300px" src="/graph/calories"></iframe>
+            <iframe id="barchart" scrolling="no" width="550px" height="280px" src="/graph/calories"></iframe>
             <div id="bar-changer">
                 <span id="calories" class="bar-item current">Calories</span>
                 <span id="protein" class="bar-item">Protein</span>
@@ -91,7 +149,19 @@ $(document).ready(function(){
                 <span id="carb" class="bar-item">Carbohydrates</span>
             </div>
         </div>
-        
+        <div style="float:left; margin-left: 10px; margin-top: 30px;">
+            <iframe id="bulletchart" scrolling="no" width="400px" height="300px" src="/graph/a"></iframe>
+        </div>
+        <div id="bullet-changer"> 
+            <span id="a" class="bullet-item current"><span class="legend-item">A</span></span>
+            <span id="g" class="bullet-item"><span class="legend-item">G</span></span>
+            <span id="k" class="bullet-item"><span class="legend-item">K</span></span>
+            <span id="n" class="bullet-item"><span class="legend-item">N</span></span>
+            <span id="q" class="bullet-item"><span class="legend-item">Q</span></span>
+            <span id="p" class="bullet-item"><span class="legend-item">P</span></span>
+            <span id="r" class="bullet-item"><span class="legend-item">R</span></span>
+            
+        </div>
         <div class="clear"></div>
     </div>
 </div>
