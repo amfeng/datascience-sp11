@@ -39,7 +39,7 @@ var bar = vis.add(pv.Bar)
     .width(40)
     .bottom(0)
     .height(function(d) d * 50)
-    .fillStyle(pv.colors("#F07F97", "#F2B968", "#FFE28A", "#ADD164", "#9ED5DE", "#6D93C9", "#C29EDE"));
+    .fillStyle(pv.colors("#F07F97", "#F2B968", "#FFE28A", "#ADD164", "#9ED5DE", "#6D93C9", "#C29EDE").by(pv.index));
 
 /* The value label. */
 bar.anchor("top").add(pv.Label)

@@ -42,6 +42,7 @@ var bar = vis.add(pv.Panel)
     .width(200 / m)
     .bottom(20)
     .height(function(d) d * 20)
+    .event("mouseover", pv.Behavior.tipsy({gravity: "w", fade: true}));
     .fillStyle(pv.Colors.category20().by(pv.index));
 
 /* The value label. */
