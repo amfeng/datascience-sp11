@@ -92,8 +92,16 @@ span.bullet-item:hover{
     opacity: 1;
 }
 
+#legend{
+    padding: 1.5em;
+    padding-left: 10em;
+}
+
+#legend > span{
+    padding-right: 1em;
+}
 span.legend-item{
-    display: block;
+    display: inline-block;
     width: 15px;
     height: 15px;
     text-indent: -9999px;
@@ -191,12 +199,21 @@ $(document).ready(function(){
             </div>
         </div>
         <div class="clear"></div>
+        <div id="legend">
+            <span id="a"><span class="legend-item">A</span>  AAHF Products</span>
+            <span id="g"><span class="legend-item">G</span>  General Mill</span>
+            <span id="k"><span class="legend-item">K</span>  Kellogs</span>
+            <span id="n"><span class="legend-item">N</span>  Nabisco</span>
+            <span id="q"><span class="legend-item">Q</span>  Post</span>
+            <span id="p"><span class="legend-item">P</span>  Quaker Oats</span>
+            <span id="r"><span class="legend-item">R</span>  Ralston Purina</span>
+        </div>
     </div>
 </div>
 <div class="container">
     <div class="graph" style="float: left;">
         <h2>Hierarchy of Cereal Brands</h2>
-        <div style="margin:auto; width: 350px; height: 350px; padding-bottom: 24px;">
+        <div style="margin:auto; width: 350px; padding-bottom: 0px;">
             <p class="whats" alt="pie">What's this?</p><p id="pie" class="popup">Percentage of cereals offered by the top cereal manufacturers.</p>
             <iframe scrolling="no" width="350px" height="350px" src="/graph/pie"></iframe>
         </div>
