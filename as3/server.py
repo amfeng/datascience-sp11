@@ -28,9 +28,11 @@ class DataHandler(tornado.web.RequestHandler):
             sep[3:] = map(toFloat, sep[3:])
             raw.append(sep)
         
-        if data_id == "flare":
+        if data_id in ["flare", "pie"]:
             data = {}
+            total = 0
             for item in raw:
+                total = total + 1
                 cereal_name = item[0]
                 cereal_man = item[1]
                 cereal_type = item[2]
@@ -46,7 +48,16 @@ class DataHandler(tornado.web.RequestHandler):
                 if cereal_type == "H": cereal_type = "Hot Cereal"
                 elif cereal_type == "C": cereal_type = "Cold Cereal"
 
-                data.setdefault(cereal_man, {}).setdefault(cereal_type, {})[cereal_name] = 0
+                if data_id == "flare": data.setdefault(cereal_man, {}).setdefault(cereal_type, {})[cereal_name] = 0
+                if data_id == "pie": data[cereal_man] = data.setdefault(cereal_man, 0) + 1
+            
+            if data_id == "pie":
+                temp = []
+                for key in ["AAHF Products", "General Mill", "Kellogs", "Nabisco", "Post", "Quaker Oats", "Ralston Purina"]:
+                    temp.append(float(data[key])/float(total) * 100)
+                data = temp
+
+
         elif data_id in ["calories", "protein", "fat", "carb"]:
             data = []
             data_indv = []
@@ -72,7 +83,8 @@ class DataHandler(tornado.web.RequestHandler):
             def average(values):
                 return sum(values, 0.0)/len(values)
             
-            for key, value in data_calc.iteritems():
+            for key in ["A", "G", "K", "N", "P", "Q", "R"]:
+                value = data_calc[key]
                 if data_id == "protein": data_indv.append(average(value[0]))
                 elif data_id == "fat": data_indv.append(average(value[1]))
                 elif data_id == "carb": data_indv.append(average(value[2]))
@@ -80,6 +92,47 @@ class DataHandler(tornado.web.RequestHandler):
 
             data.append(data_indv)
             data.append(man)
+        elif data_id in ["a", "g", "k", "n", "p", "q", "r"]:
+            data_id = data_id.upper()
+            data = []
+            data_calc = {}
+            for item in raw:
+                man = item[1]
+                fiber = float(item[7])
+                sugar = item[9]
+                protein = item[4]
+                sodium = item[6]
+                
+                bucket = data_calc.setdefault(man, ([],[],[],[]))
+                bucket[0].append(fiber)
+                bucket[1].append(sugar)
+                bucket[2].append(protein)
+                bucket[3].append(sodium)
+            
+            man = []
+
+            for key in data_calc:
+                man.append(key)
+
+            def average(values):
+                return sum(values, 0.0)/len(values)
+            
+            fiber = ["Fiber", [20/5, 35/5, 40/5], [], "grams"]
+            sugar = ["Sugar", [2200*0.1/4, 2900*0.1/4, 3500*0.1/4], [], "grams"]
+            protein = ["Protein", [50/5, 63/5, 70/5], [], "grams"]
+            sodium = ["Sodium", [1800/5, 2400/5, 3000/5], [], "milligrams"]
+
+            value = data_calc[data_id]
+           
+            fiber[2].append((average(value[0])))
+            sugar[2].append((average(value[1])))
+            protein[2].append((average(value[2])))
+            sodium[2].append((average(value[3])))
+            
+            data.append(fiber)
+            data.append(sugar)
+            data.append(protein)
+            data.append(sodium)
         elif data_id == "heat":
             def shift(x):
                 d = [x[0]]
