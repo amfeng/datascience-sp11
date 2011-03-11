@@ -40,7 +40,7 @@ vis.add(pv.Wedge)
   .anchor("center").add(pv.Label)
     .visible(function(d) d > .15)
     .textAngle(0)
-    .text(function(d) d.toFixed(2));
+    .text(function(d) d.toFixed(2) + "%");
 
 vis.render();
 
