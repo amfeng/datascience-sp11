@@ -19,6 +19,12 @@ a {
     clear: both;
 }
 
+p {
+    font-size: 0.8em;
+    font-style: italic;
+    padding: 0.5em;
+}
+
 #logo{
     width: 900px;
     height: 106px;
@@ -57,7 +63,7 @@ div#bar-changer {
 
 div#bullet-changer {
     float:left;
-    margin-top: 55px;
+    margin-top: 70px;
 }
 span.bar-item{
     padding: 7px;
@@ -115,6 +121,20 @@ span#r span.legend-item{
     background: #C29EDE;
 }
 
+p.whats {
+    text-align: right;
+    cursor: pointer;
+    margin: 0px;
+    font-style: none;
+}
+
+p.whats:hover{
+    text-decoration: underline;
+}
+p.popup {
+    display: none;
+    margin: 2px;
+}
 </style>
 <script type="text/javascript">
 $(document).ready(function(){
@@ -129,7 +149,12 @@ $(document).ready(function(){
         $(this).addClass("current");
         $("#bulletchart").attr("src", "/graph/" + $(this).attr("id"));
     });
-
+    $(".whats").hover(function(){
+        popup = $("#" + $(this).attr("alt"));
+        popup.show();
+    }, function(){
+        $("#" + $(this).attr("alt")).hide();
+    });
 });
 </script>
 </head>
@@ -139,7 +164,7 @@ $(document).ready(function(){
 </div>
 <div class="container">
     <div class="graph">
-        <h2>Comparison of Protein, Fat, and Carbohydrates (in grams) for the 7 major cereal manufacturers</h2>
+        <h2>Comparison of Nutritional Facts for the 7 major cereal manufacturers</h2>
         <div style="float:left; margin-left: 1em;">
             <iframe id="barchart" scrolling="no" width="550px" height="280px" src="/graph/calories"></iframe>
             <div id="bar-changer">
@@ -149,18 +174,21 @@ $(document).ready(function(){
                 <span id="carb" class="bar-item">Carbohydrates</span>
             </div>
         </div>
-        <div style="float:left; margin-left: 10px; margin-top: 30px;">
-            <iframe id="bulletchart" scrolling="no" width="400px" height="300px" src="/graph/a"></iframe>
-        </div>
-        <div id="bullet-changer"> 
-            <span id="a" class="bullet-item current"><span class="legend-item">A</span></span>
-            <span id="g" class="bullet-item"><span class="legend-item">G</span></span>
-            <span id="k" class="bullet-item"><span class="legend-item">K</span></span>
-            <span id="n" class="bullet-item"><span class="legend-item">N</span></span>
-            <span id="q" class="bullet-item"><span class="legend-item">Q</span></span>
-            <span id="p" class="bullet-item"><span class="legend-item">P</span></span>
-            <span id="r" class="bullet-item"><span class="legend-item">R</span></span>
+        <div style="float:left; margin-left: 10px;">
+            <div style="float:left;width: 400px; margin-top: 20px;">
+                <p class="whats" alt="bullet">What's this?</p><p id="bullet" class="popup">Recommended nutritional intake for breakfast (assuming breakfast is 1/5 of daily intake) with the average nutritional information from top cereal manufacturers.</p>
+                <iframe id="bulletchart" scrolling="no" width="400px" height="280px" src="/graph/a"></iframe>
+            </div>
+            <div id="bullet-changer"> 
+                <span id="a" class="bullet-item current"><span class="legend-item">A</span></span>
+                <span id="g" class="bullet-item"><span class="legend-item">G</span></span>
+                <span id="k" class="bullet-item"><span class="legend-item">K</span></span>
+                <span id="n" class="bullet-item"><span class="legend-item">N</span></span>
+                <span id="q" class="bullet-item"><span class="legend-item">Q</span></span>
+                <span id="p" class="bullet-item"><span class="legend-item">P</span></span>
+                <span id="r" class="bullet-item"><span class="legend-item">R</span></span>
             
+            </div>
         </div>
         <div class="clear"></div>
     </div>
@@ -168,15 +196,19 @@ $(document).ready(function(){
 <div class="container">
     <div class="graph" style="float: left;">
         <h2>Hierarchy of Cereal Brands</h2>
-        <div style="margin:auto; width: 350px; height: 350px;">
+        <div style="margin:auto; width: 350px; height: 350px; padding-bottom: 24px;">
+            <p class="whats" alt="pie">What's this?</p><p id="pie" class="popup">Percentage of cereals offered by the top cereal manufacturers.</p>
             <iframe scrolling="no" width="350px" height="350px" src="/graph/pie"></iframe>
         </div>
         <div>
             <iframe scrolling="no" width="500px" height="900px" src="/graph/flare"></iframe>
         </div>
     </div>
-    <div class="graph" style="float: left; margin-left: 10px;">
+    <div class="graph" style="float: left; margin-left: 10px; width: 536px;">
         <h2>Visual Heatmap of Cereal Nutrition</h2>
+        <div style="padding-left: 3em; padding-right: 5em;">
+            <p class="whats" alt="_heat">What's this?</p><p id="_heat" class="popup">Visual "heatmap" of relative nutritional values for various cereal brands. Darker colors mean high positive deviation from the mean for that particular category, while lighter colors mean high negative deviation from the mean.</p>
+        </div>
         <iframe scrolling="no" width="536px" height="1250px" src="/graph/heat"></iframe>
     </div>
     <div class="clear"></div>
