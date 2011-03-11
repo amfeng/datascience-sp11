@@ -1,0 +1,23 @@
+Amber Feng
+Data Science Spring 2011
+
+=Assignment 3, Cereal Data Visualization=
+
+==Intent of each visualization==
+
+* Bar graphs - show relative (and absolute) values of specific nutritional information
+* Bullet graphs - show relative (and absolute) values of specific nutritional information in relation to the "daily suggested intake"
+* Pie/donut chart - show percentages of cereal from different cereal manufacturers
+* Hierarchy - provide an easy way to see which cereals are manufactured by which manufacturers
+* Heatmap - provide an easy way to visualize (by color density) which cereals are best in various nutritional categories
+
+==Visualization Techniques==
+I employed many different visualization techniques for presenting the information. Using bar graphs were pretty obvious for the purpose of comparing the nutritional values across different cereal manufacturers, but I decided not to go with the stacked bar charts because it was a little too difficult to prepare the data that way. 
+
+Bullet charts were also an obvious choice for representing the "suggested daily nutritional intake", and pie charts were the obvious choice for doing a percentage-based visualization. The bracket/tree-like representation for the cereal brands hierachy was also an effective choice, in my opinion.
+
+The only visualization that I wasn't sure was standard for the purpose I used it for was the heatmap. Graphing basically all of the information given (cereal brands x nutritional information) doesn't seem like something that would usuabbly be done, but I think it was a smart choice judging by the time I and some of my friends spent looking at it and easily comparing different cereal brands.
+
+==Data Preparation==
+
+A fair amount of data preparation had to be done both because of the nature of the graphs and because of the specific format required by Protovis. In Python, I performed a lot of aggregation (via bucketing by manufacturer name in a hash table, since this was my main categorization) and normalization. Unfortunately, I did not end up having time to use any of the data cleaning techniques discusssed in class (dropping outliers, linear interpolation for missing values). 
