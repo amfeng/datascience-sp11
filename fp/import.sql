@@ -17,14 +17,14 @@ CREATE TABLE IF NOT EXISTS comments (
     Id INT
 );
 
-CREATE TABLE IF NOT EXISTS posts (
+CREATE TABLE IF NOT EXISTS questions (
     Body LONGTEXT,
     ViewCount INT,
     LastActivityDate DATETIME,
     Title MEDIUMTEXT,
     LastEditorUserId INT,
     LastEditorDisplayName VARCHAR(255),
-    LastEditDate DATETIME,
+    LastEditDateTime DATETIME,
     CommentCount INT,
     AnswerCount INT,
     AcceptedAnswerId INT,
@@ -33,8 +33,24 @@ CREATE TABLE IF NOT EXISTS posts (
     OwnerUserId INT,
     Tags VARCHAR(255),
     CreationDate DATETIME,
-    FavorityCount INT,
+    FavoriteCount INT,
     Id INT
+);
+
+CREATE TABLE IF NOT EXISTS answers (
+    Body LONGTEXT,
+    ViewCount INT,
+    LastEditorDisplayName VARCHAR(255),
+    LastEditorUserId INT,
+    PostTypeId INT, 
+    LastEditDate DATETIME,
+    CommentCount INT,
+    Score INT, 
+    ParentId INT, 
+    OwnerUserId INT,
+    CreationDate DATETIME,
+    Id INT,
+    LastActivityDate DATETIME
 );
 
 CREATE TABLE IF NOT EXISTS users (
@@ -61,6 +77,7 @@ CREATE TABLE IF NOT EXISTS votes (
 
 LOAD DATA LOCAL INFILE 'badges.xml.dat' INTO TABLE badges FIELDS TERMINATED BY '' LINES TERMINATED BY '';
 LOAD DATA LOCAL INFILE 'comments.xml.dat' INTO TABLE comments FIELDS TERMINATED BY '' LINES TERMINATED BY '';
-LOAD DATA LOCAL INFILE 'posts.xml.dat' INTO TABLE posts FIELDS TERMINATED BY '' LINES TERMINATED BY '';
 LOAD DATA LOCAL INFILE 'users.xml.dat' INTO TABLE users FIELDS TERMINATED BY '' LINES TERMINATED BY '';
+LOAD DATA LOCAL INFILE 'questions.xml.dat' INTO TABLE questions FIELDS TERMINATED BY '' LINES TERMINATED BY '';
+LOAD DATA LOCAL INFILE 'answers.xml.dat' INTO TABLE answers FIELDS TERMINATED BY '' LINES TERMINATED BY '';
 LOAD DATA LOCAL INFILE 'votes.xml.dat' INTO TABLE votes FIELDS TERMINATED BY '' LINES TERMINATED BY '';
