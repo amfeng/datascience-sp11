@@ -2,14 +2,14 @@ USE cs194;
 
 
 CREATE TABLE IF NOT EXISTS badges (
-    Date VARCHAR(255),
+    Date DATETIME,
     UserId INT,
     Id INT, 
     Name VARCHAR(255)
 );
 
 CREATE TABLE IF NOT EXISTS comments (
-    CreationDate VARCHAR(255),
+    CreationDate DATETIME,
     Text LONGTEXT,
     UserId INT,
     Score INT,
@@ -20,11 +20,11 @@ CREATE TABLE IF NOT EXISTS comments (
 CREATE TABLE IF NOT EXISTS posts (
     Body LONGTEXT,
     ViewCount INT,
-    LastActivityDate VARCHAR(255),
+    LastActivityDate DATETIME,
     Title MEDIUMTEXT,
     LastEditorUserId INT,
     LastEditorDisplayName VARCHAR(255),
-    LastEditDate VARCHAR(255),
+    LastEditDate DATETIME,
     CommentCount INT,
     AnswerCount INT,
     AcceptedAnswerId INT,
@@ -32,7 +32,7 @@ CREATE TABLE IF NOT EXISTS posts (
     PostTypeId INT,
     OwnerUserId INT,
     Tags VARCHAR(255),
-    CreationDate VARCHAR(255),
+    CreationDate DATETIME,
     FavorityCount INT,
     Id INT
 );
@@ -42,13 +42,13 @@ CREATE TABLE IF NOT EXISTS users (
     DisplayName VARCHAR(255),
     Views INT,
     AboutMe MEDIUMTEXT,
-    LastAccessDate VARCHAR(255),
+    LastAccessDate DATETIME,
     WebsiteUrl MEDIUMTEXT,
     EmailHash VARCHAR(255),
     Reputation INT,
     Location MEDIUMTEXT,
     UpVotes INT,
-    CreationDate VARCHAR(255),
+    CreationDate DATETIME,
     Id INT
 );
 
@@ -56,7 +56,7 @@ CREATE TABLE IF NOT EXISTS votes (
     VoteTypeId INT,
     PostId INT,
     Id INT,
-    CreationDate VARCHAR(255)
+    CreationDate DATETIME
 );
 
 LOAD DATA LOCAL INFILE 'badges.xml.dat' INTO TABLE badges FIELDS TERMINATED BY '' LINES TERMINATED BY '';
