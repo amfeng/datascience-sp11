@@ -1,5 +1,6 @@
 import os, sys, re
 from cElementTree import iterparse
+from xmlkeys import FIELD_KEYS
 
 FIELD_DELIMITER = unicode('\x01')
 LINE_DELIMITER = unicode('\x02')
@@ -71,7 +72,18 @@ def parseFile(path, source):
             if event == "end":
                 root.clear()
             else:
-                keys = elem.keys()
+                if postsFile:
+                    if elem.get("PostTypeId") == "2":
+                        # Answer post
+                        index = 1
+                        keys = FIELD_KEYS["answers.xml"]
+                    else:
+                        index = 0
+                        keys = FIELD_KEYS["questions.xml"]
+                else:
+                    index = 0
+                    keys = FIELD_KEYS[source]
+
                 vals = []
                 for key in keys:
                     val = elem.get(key)
@@ -79,11 +91,6 @@ def parseFile(path, source):
                         val = "NULL"
                     vals.append(val)
                 joined = FIELD_DELIMITER.join(vals)
-                if postsFile and (elem.get("PostTypeId") == "2"):
-                    # Answer post
-                    index = 1
-                else:
-                    index = 0
                 appendBuffer(index, joined)
                 appendBuffer(index, LINE_DELIMITER)
 
