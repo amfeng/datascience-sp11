@@ -15,14 +15,12 @@ buffer = ""
 
 def appendBuffer(text):
     global buffer
-    if text == None: text = ""
+    if text == None: text = "NULL"
     buffer += text
 
-def appendField(text):
-    global capture
+def appendField(text, last=False):
     appendBuffer(text)
-    appendBuffer(FIELD_DELIMITER)
-    capture += 1
+    if not last: appendBuffer(FIELD_DELIMITER)
 
 tempPath = "data/twitter.dat.temp"
 dataPath = "data/twitter.dat"
@@ -33,24 +31,30 @@ jsonDecoder = json.JSONDecoder()
 
 obj = jsonDecoder.decode(urllib2.urlopen(twitterUrl + "&page=" + str(currPage)).read())
 
-for e in obj["results"]:
-    print e["from_user"]
-    print e["created_at"]
-    print e["text"]
-    text = e["text"]
+for row in obj["results"]:
+    appendField(row["from_user"])
+    appendField(row["created_at"])
+
+    text = row["text"]
+
+    # Regex Stack Overflow URLs
     match = stackRegex.search(text)
-    if match:
-        print match.group(0)
-    else:     
+    if match: appendField(match.group(0), True)
+    else: # Check if has bit.ly URL     
         match = bitlyRegex.search(text)
         if match: 
-            print match.group(1)
             requestUrl = bitlyUrl + match.group(1)
-            print requestUrl
             realUrl = urllib2.urlopen(bitlyUrl + match.group(1)).read()
             print realUrl
 
-
+            # Make sure it matches a stack overflow address
+            match = stackRegex.search(realUrl)
+            
+            if match: appendField(realUrl, True)
+            else: appendField(None, True)
+        else: # Doesn't match either of them, set URL as NULL
+            appendField(None, True)
+    appendBuffer(LINE_DELIMITER)
 
        
-#out.write(buffer);
+out.write(buffer);
