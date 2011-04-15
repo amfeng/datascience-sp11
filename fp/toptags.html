@@ -8,16 +8,35 @@
   <body><div id="center"><div id="fig">
     <script type="text/javascript+protovis">
         $(document).ready(function(){
+            function jitter(count, tag){
+                return ((count + tag.length) % 17)/17 ;
+            }
+
+            function tagcolor(d){
+                return pv.colors("#1f77b4", "#ff7f0e", "#2ca02c", "#d62728", "#9467bd", "#8c564b", "#e377c2", "#7f7f7f", "#bcbd22", "#17becf")
+                         .domain("c#", "java", "php", "javascript", "jquery", ".net", "iphone", "asp.net", "c++", "python", "android", "mysql", "sql", "html", "ruby-on-rails", "objective-c", "css", "c", "sql-server", "wpf")
+                         (d.tag);
+
+            }
+
+            function dotcolor(active, d){
+                if (active == -1){
+                    // Nothing is selected, make everything colored
+                    return tagcolor(d);
+                } else {
+                    // Something is selected, selectively choose color
+                    return active == d.tag ? tagcolor(d) : "#ccc";
+                }
+            }
             $.get("/data/toptags", function(data){
                 data = $.parseJSON(data);
                 data = data["data"]
-                console.log(data);
 
                 /* Sizing and scales. */
                 var w = 3000,
                     h = 400,
                     x = pv.Scale.linear(0, 12*3 - 3).range(0, w),
-                    y = pv.Scale.linear(0, 100).range(0, h),
+                    y = pv.Scale.linear(0, 10000).range(0, h),
                     c = pv.Scale.log(1, 100).range("orange", "brown");
 
                 /* The root panel. */
@@ -40,23 +59,29 @@
 
                 /* X-axis and ticks. */
                 vis.add(pv.Rule)
-                    .data(x.ticks())
+                    .data(pv.range(1,35,1))
                     .left(x)
                     .strokeStyle(function(d) d ? "#eee" : "#000")
                   .anchor("bottom").add(pv.Label)
-                    .visible(function(d) d > 0 && d < 100)
                     .text(x.tickFormat);
 
                 /* The dot plot! */
-                vis.add(pv.Panel)
+                vis.add(pv.Dot)
                     .data(data)
-                  .add(pv.Dot)
-                    .left(function(d) x(d.month + (d.year-2008)*12 - 7 + 0.7*(Math.random() - Math.random())))
-                    .bottom(function(d) y(d.count)/100)
-                    .strokeStyle(pv.colors("#9c9ede", "#7375b5", "#4a5584", "#cedb9c", "#b5cf6b", "#8ca252", "#637939", "#e7cb94", "#e7ba52", "#bd9e39", "#8c6d31", "#e7969c", "#d6616b", "#ad494a", "#843c39", "#de9ed6", "#ce6dbd", "#a55194", "#7b4173").by(pv.index))
+                    .def("active", -1)
+                    .event("mouseover", function(d) this.active(d.tag)) 
+                    .event("mouseout", function() this.active(-1))
+                    .left(function(d) x(d.month + (d.year-2008)*12 - 6 + jitter(d.count, d.tag)))
+                    .bottom(function(d) y(d.count))
+                    //.strokeStyle(function(d) this.active() == d.tag ? "orange" : "#ccc")
+                    .strokeStyle(function(d) dotcolor(this.active(), d))
+                    //.strokeStyle(pv.colors("#b58900", "#cb4b16", "#dc322f", "#d33682", "#6c71c4", "#268bd2", "#2aa198", "#859900").by(function(d) d.tag))
                     .fillStyle(function() this.strokeStyle().alpha(.2))
-                    .size(function(d) d.count/100)
-                    .title(function(d) d.count.toFixed(1));
+                    .size(30)
+                    .title(function(d) d.tag)
+                    .anchor("right").add(pv.Label)
+                      .visible(function() this.anchorTarget().active() == this.index)
+                      .text(function(d) d.tag);
 
                 vis.render();
             });

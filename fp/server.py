@@ -21,7 +21,7 @@ class DataHandler(tornado.web.RequestHandler):
         #for line in read:
             #raw.append(sep)
         if data_id == "toptags":
-            self.write(open("etl/bucketed_tags.json").read())
+            self.write(open("etl/toptags_20.json").read())
 
         #self.write(tornado.escape.json_encode(data))
 
