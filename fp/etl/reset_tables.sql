@@ -7,3 +7,4 @@ DROP TABLE answers;
 DROP TABLE users;
 DROP TABLE votes;
 DROP TABLE tags;
+DROP TABLE toptags;

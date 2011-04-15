@@ -1,9 +1,6 @@
 use cs194;
 
-CREATE TABLE toptags (
-    Tag VARCHAR(255),
-    Count INT
-);
+LOAD DATA LOCAL INFILE 'tags.dat' INTO TABLE tags FIELDS TERMINATED BY '' LINES TERMINATED BY '';
 
 INSERT INTO toptags (Tag, Count)
     SELECT Tag, COUNT(*) as c1
