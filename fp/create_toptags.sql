@@ -1,6 +1,6 @@
 use cs194;
 
-CREATE toptags (
+CREATE TABLE toptags (
     Tag VARCHAR(255),
     Count INT
 );

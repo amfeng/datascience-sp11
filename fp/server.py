@@ -1,7 +1,7 @@
 import tornado.ioloop
 import tornado.web, tornado.escape
 
-import os
+import os, json
 
 class MainHandler(tornado.web.RequestHandler):
     def get(self):
@@ -12,14 +12,18 @@ class GraphHandler(tornado.web.RequestHandler):
         self.render(graph_id + ".html", title="")
 
 class DataHandler(tornado.web.RequestHandler):
+    jsonDecoder = json.JSONDecoder()
     def get(self, data_id):
         #Parse and package data
         raw = []
-        data = Hash() 
+        data = {} 
         #read = open('cereal.csv', 'r+')
         #for line in read:
             #raw.append(sep)
-        self.write(tornado.escape.json_encode(data))
+        if data_id == "toptags":
+            self.write(open("bucketed_tags.json").read())
+
+        #self.write(tornado.escape.json_encode(data))
 
 
 settings = {
