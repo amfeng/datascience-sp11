@@ -1,5 +1,6 @@
-USE cs194;
+CREATE DATABASE IF NOT EXISTS cs194;
 
+use cs194;
 
 CREATE TABLE IF NOT EXISTS badges (
     Date DATETIME,
@@ -14,7 +15,8 @@ CREATE TABLE IF NOT EXISTS comments (
     UserId INT,
     Score INT,
     PostId INT,
-    Id INT
+    Id INT,
+    PRIMARY KEY(Id)
 );
 
 CREATE TABLE IF NOT EXISTS questions (
@@ -34,7 +36,8 @@ CREATE TABLE IF NOT EXISTS questions (
     Tags VARCHAR(255),
     CreationDate DATETIME,
     FavoriteCount INT,
-    Id INT
+    Id INT,
+    PRIMARY KEY(Id)
 );
 
 CREATE TABLE IF NOT EXISTS answers (
@@ -50,7 +53,8 @@ CREATE TABLE IF NOT EXISTS answers (
     OwnerUserId INT,
     CreationDate DATETIME,
     Id INT,
-    LastActivityDate DATETIME
+    LastActivityDate DATETIME,
+    PRIMARY KEY(Id)
 );
 
 CREATE TABLE IF NOT EXISTS users (
@@ -78,7 +82,8 @@ CREATE TABLE IF NOT EXISTS votes (
 CREATE TABLE IF NOT EXISTS tags (
     Tag VARCHAR(255),
     PostId INT,
-    CreationDate DATETIME
+    CreationDate DATETIME,
+    PRIMARY KEY(Id)
 );
 
 CREATE TABLE IF NOT EXISTS toptags (
@@ -86,4 +91,10 @@ CREATE TABLE IF NOT EXISTS toptags (
     Count INT
 );
 
+CREATE TABLE IF NOT EXISTS responsetimes (
+    QuestionId INT,
+    AnswerId INT,
+    Tag VARCHAR(255),
+    ResponseTime INT(15)
+);
 
