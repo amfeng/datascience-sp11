@@ -34,7 +34,7 @@ FIELD_KEYS = {
                     "LastEditDate",
                     "CommentCount",
                     "Score",
-                    "ParentId"
+                    "ParentId",
                     "OwnerUserId",
                     "CreationDate",
                     "Id"
