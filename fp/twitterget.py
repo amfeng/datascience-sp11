@@ -29,32 +29,33 @@ out = open(dataPath, 'a+')
 
 jsonDecoder = json.JSONDecoder()
 
-obj = jsonDecoder.decode(urllib2.urlopen(twitterUrl + "&page=" + str(currPage)).read())
+for i in range(1, 10):
+    obj = jsonDecoder.decode(urllib2.urlopen(twitterUrl + "&page=" + str(i)).read())
 
-for row in obj["results"]:
-    appendField(row["from_user"])
-    appendField(row["created_at"])
+    for row in obj["results"]:
+        appendField(row["from_user"])
+        appendField(row["created_at"])
 
-    text = row["text"]
+        text = row["text"]
 
-    # Regex Stack Overflow URLs
-    match = stackRegex.search(text)
-    if match: appendField(match.group(0), True)
-    else: # Check if has bit.ly URL     
-        match = bitlyRegex.search(text)
-        if match: 
-            requestUrl = bitlyUrl + match.group(1)
-            realUrl = urllib2.urlopen(bitlyUrl + match.group(1)).read()
-            print realUrl
+        # Regex Stack Overflow URLs
+        match = stackRegex.search(text)
+        if match: appendField(match.group(0), True)
+        else: # Check if has bit.ly URL     
+            match = bitlyRegex.search(text)
+            if match: 
+                requestUrl = bitlyUrl + match.group(1)
+                realUrl = urllib2.urlopen(bitlyUrl + match.group(1)).read()
+                print realUrl
 
-            # Make sure it matches a stack overflow address
-            match = stackRegex.search(realUrl)
-            
-            if match: appendField(realUrl, True)
-            else: appendField(None, True)
-        else: # Doesn't match either of them, set URL as NULL
-            appendField(None, True)
-    appendBuffer(LINE_DELIMITER)
+                # Make sure it matches a stack overflow address
+                match = stackRegex.search(realUrl)
+                
+                if match: appendField(realUrl, True)
+                else: appendField(None, True)
+            else: # Doesn't match either of them, set URL as NULL
+                appendField(None, True)
+        appendBuffer(LINE_DELIMITER)
 
        
 out.write(buffer);
