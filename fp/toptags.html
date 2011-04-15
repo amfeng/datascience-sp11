@@ -14,9 +14,9 @@
                 console.log(data);
 
                 /* Sizing and scales. */
-                var w = 4000,
+                var w = 3000,
                     h = 400,
-                    x = pv.Scale.linear(0, 12*4).range(0, w),
+                    x = pv.Scale.linear(0, 12*3 - 3).range(0, w),
                     y = pv.Scale.linear(0, 100).range(0, h),
                     c = pv.Scale.log(1, 100).range("orange", "brown");
 
@@ -51,7 +51,7 @@
                 vis.add(pv.Panel)
                     .data(data)
                   .add(pv.Dot)
-                    .left(function(d) x(d.month + (d.year-2008)*12))
+                    .left(function(d) x(d.month + (d.year-2008)*12 - 7 + 0.7*(Math.random() - Math.random())))
                     .bottom(function(d) y(d.count)/100)
                     .strokeStyle(pv.colors("#9c9ede", "#7375b5", "#4a5584", "#cedb9c", "#b5cf6b", "#8ca252", "#637939", "#e7cb94", "#e7ba52", "#bd9e39", "#8c6d31", "#e7969c", "#d6616b", "#ad494a", "#843c39", "#de9ed6", "#ce6dbd", "#a55194", "#7b4173").by(pv.index))
                     .fillStyle(function() this.strokeStyle().alpha(.2))
