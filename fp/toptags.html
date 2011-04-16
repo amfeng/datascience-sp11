@@ -106,6 +106,12 @@
                             vis.render();
                         }
                      )
+                    .event("mousedown",
+                        function() {
+                            this.active(-1);
+                            vis.render();
+                        }
+                     )
                     .left(function(d) x(d.month + (d.year-2008)*12 - 6 + jitter(d.count, d.tag)))
                     .bottom(function(d) y(d.count) + 10)
                     .strokeStyle(function(d) dotcolor(this.active(), d))

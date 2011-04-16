@@ -13,8 +13,8 @@ $(document).ready(function(){
     }
 
     $(".yearscroll").click(function() {
-        $(".yearscroll").removeClass("primary");
-        $(this).addClass("primary");
+        $(".yearscroll").removeClass("primary").removeClass("current");
+        $(this).addClass("primary").addClass("current");
 
         year = $(this).attr("id");
         if(year == "ys2008"){
