@@ -12,18 +12,33 @@ class GraphHandler(tornado.web.RequestHandler):
         self.render(graph_id + ".html", title="")
 
 class DataHandler(tornado.web.RequestHandler):
-    jsonDecoder = json.JSONDecoder()
     def get(self, data_id):
+        jsonDecoder = json.JSONDecoder()
         #Parse and package data
         raw = []
         data = {} 
         #read = open('cereal.csv', 'r+')
         #for line in read:
             #raw.append(sep)
-        if data_id == "toptags":
-            self.write(open("etl/toptags_20.json").read())
-
-        #self.write(tornado.escape.json_encode(data))
+        if data_id == "toptags" or data_id == "toptagsn":
+            input = open("etl/toptags_20.json").read()
+            if data_id == "toptags": 
+                self.write(input)
+                return
+            elif data_id == "toptagsn":
+                count = {}
+                input = jsonDecoder.decode(input)
+                input = input["data"]
+                
+                for row in input:
+                    key = str(row["month"]) + "-" + str(row["year"])
+                    if key in count: count[key] += row["count"]
+                    else: count[key] = row["count"]
+                
+                data["count"] = count
+                data["data"] = input
+                
+        self.write(tornado.escape.json_encode(data))
 
 
 settings = {
