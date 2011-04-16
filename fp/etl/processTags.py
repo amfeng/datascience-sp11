@@ -4,12 +4,15 @@ import MySQLdb.cursors
 HOST = "localhost"
 USER = "root"
 DB = "cs194"
-OUTPUT_FILE = "tags.dat"
+TAGS_FILE = "tags.dat"
+QUESTIONS_TAGS_FILE = "questions_tags.dat"
+
 
 FIELD_DELIMITER = unicode('\x01')
 LINE_DELIMITER = unicode('\x02')
 
-output = open(OUTPUT_FILE, "w+")
+tags_file = open(TAGS_FILE, "w+")
+questions_tags_file = open(QUESTIONS_TAGS_FILE, "w+")
 
 query = "SELECT Tags, Id, CreationDate FROm questions";
 buf = ""
@@ -30,7 +33,7 @@ for row in cursor:
         buf += FIELD_DELIMITER.join([tag, str(int(postid)), str(date)])
         buf += LINE_DELIMITER
 
-        output.write(buf.encode('UTF-8'))
+        tags_file.write(buf.encode('UTF-8'))
         buf = ""
         
 

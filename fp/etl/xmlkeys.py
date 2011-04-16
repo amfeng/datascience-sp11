@@ -37,7 +37,7 @@ FIELD_KEYS = {
                     "ParentId",
                     "OwnerUserId",
                     "CreationDate",
-                    "Id"
+                    "Id",
                     "LastActivityDate"],
     "users.xml": ["DownVotes",
                   "DisplayName",

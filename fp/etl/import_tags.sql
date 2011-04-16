@@ -7,5 +7,5 @@ INSERT INTO toptags (Tag, Count)
         FROM tags
         GROUP BY tag
         ORDER BY c1 DESC
-        LIMIT 50;
+        LIMIT 20;
 
