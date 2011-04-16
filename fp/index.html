@@ -1,1 +1,105 @@
-It works!
+<html>
+  <head>
+    <title>Scatterplot</title>
+    <script src="/static/protovis-3.2/protovis-r3.2.js" type="text/javascript"></script>
+    <script src="/static/jquery-1.5.1.min.js" type="text/javascript"></script>
+    <link rel="stylesheet" href="/static/reset.css" media="screen">
+    <link rel="stylesheet" href="/static/css3buttons.css" media="screen">
+
+    <script type="text/javascript+protovis">
+        $(document).ready(function(){
+            currScrollLevel = 0;
+            
+            $("#toptagsn-iframe").hide();
+            $("#normchooser a").toggle(toNorm, toUnNorm);
+
+            function scrollFrame(left){
+                console.log("scrolling" + left);
+                //$("#toptags")animate({scrollTop: left}, 2000);
+                $("#toptags")[0].contentWindow.scrollTo(left, 0);
+                $("#toptagsn")[0].contentWindow.scrollTo(left, 0);
+                currScrollLevel = left;
+            }
+
+            $(".yearscroll").click(function() {
+                $(".yearscroll").removeClass("primary");
+                $(this).addClass("primary");
+
+                year = $(this).attr("id");
+                if(year == "ys2008"){
+                    scrollFrame(0);
+                } else if (year == "ys2009") {
+                    scrollFrame(950);
+                } else if (year == "ys2010") {
+                    scrollFrame(2000);
+                }
+                
+            });
+
+            function toNorm() {
+                $("#toptags-iframe").hide();
+                $("#toptagsn-iframe").show();
+                $("#normchooser a span").addClass("check").addClass("icon");
+            }
+
+            function toUnNorm() {
+                $("#toptagsn-iframe").hide();
+                $("#toptags-iframe").show();
+                $("#normchooser a span").removeClass("check").removeClass("icon");
+            }
+
+            
+        });
+    </script>
+    <style type="text/css">
+        body {
+            font-family: Helvetica, Arial, serif;
+        }
+
+        #header {
+            height: 50px;
+        }
+
+        iframe {
+            border: 0px;
+        }
+
+        #normchooser a {
+            float: right;
+            margin-right: 50px;
+        }
+
+        #yearchooser {
+            text-align: center;
+        }
+
+        .clear {
+            clear: both;
+        }
+
+    </style>
+
+  </head>
+  <body>      
+    <div id="header">
+    </div>
+    <div class="container" style="margin:auto; width: 1000px;">
+        <div id="normchooser"><a href="#" class="button"><span></span>Normalized</a></div>
+        <div class="clear"></div>
+        <div id="toptags-container">
+            <div id="toptags-iframe">
+                <iframe id="toptags" scrolling="no" width="950px" height="350px" src="/graph/toptags"></iframe>  
+            </div>
+            <div id="toptagsn-iframe">
+                <iframe id="toptagsn" scrolling="no" width="950px" height="350px" src="/graph/toptagsn"></iframe>  
+            </div>
+        </div>
+        <div id="yearchooser">
+            <a href="#" class="yearscroll left primary button" id="ys2008">Jul 2008 - Jun 2009</a>
+            <a href="#" class="yearscroll middle button" id="ys2009">Jul 2009 - Jun 2010</a>
+            <a href="#" class="yearscroll right button" id="ys2010">Mar 2010 - Mar 2011</a>
+        </div>
+    </div>
+  </body>
+</html>
+
