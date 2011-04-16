@@ -83,10 +83,6 @@
                     .fillStyle(function() this.strokeStyle().alpha(.3))
                     .size(20)
                     .title(function(d) d.tag)
-                    .anchor("right").add(pv.Label)
-                      .visible(false)
-                      //.visible(function(d) console.log(this.anchorTarget().active()))
-                      .text(function(d) d.tag);
                 vis.render();
             });
         });
