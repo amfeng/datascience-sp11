@@ -28,6 +28,7 @@
                     return active == d.tag ? tagcolor(d) : "#ccc";
                 }
             }
+
             $.get("/data/toptags", function(data){
                 data = $.parseJSON(data);
                 data = data["data"]
@@ -69,18 +70,18 @@
                 vis.add(pv.Dot)
                     .data(data)
                     .def("active", -1)
-                    .event("mouseover", function(d) this.active(d.tag)) 
+                    .event("mouseover", function(d) this.active(d.tag) )
                     .event("mouseout", function() this.active(-1))
                     .left(function(d) x(d.month + (d.year-2008)*12 - 6 + jitter(d.count, d.tag)))
                     .bottom(function(d) y(d.count))
-                    //.strokeStyle(function(d) this.active() == d.tag ? "orange" : "#ccc")
                     .strokeStyle(function(d) dotcolor(this.active(), d))
                     //.strokeStyle(pv.colors("#b58900", "#cb4b16", "#dc322f", "#d33682", "#6c71c4", "#268bd2", "#2aa198", "#859900").by(function(d) d.tag))
-                    .fillStyle(function() this.strokeStyle().alpha(.2))
+                    .fillStyle(function() this.strokeStyle().alpha(.3))
                     .size(30)
                     .title(function(d) d.tag)
                     .anchor("right").add(pv.Label)
-                      .visible(function() this.anchorTarget().active() == this.index)
+                      .visible(false)
+                      //.visible(function(d) console.log(this.anchorTarget().active()))
                       .text(function(d) d.tag);
 
                 vis.render();
