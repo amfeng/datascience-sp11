@@ -82,8 +82,7 @@ CREATE TABLE IF NOT EXISTS votes (
 CREATE TABLE IF NOT EXISTS tags (
     Tag VARCHAR(255),
     PostId INT,
-    CreationDate DATETIME,
-    PRIMARY KEY(Id)
+    CreationDate DATETIME
 );
 
 CREATE TABLE IF NOT EXISTS toptags (
