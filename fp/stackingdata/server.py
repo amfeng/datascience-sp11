@@ -22,7 +22,7 @@ class DataHandler(webapp.RequestHandler):
         raw = []
         data = {} 
         if data_id == "toptags" or data_id == "toptagsn":
-            input = open(os.path.join(os.path.dirname(__file__), "etl/toptags_20.json")).read()
+            input = open(os.path.join(os.path.dirname(__file__), "data/toptags_20.json")).read()
             if data_id == "toptags": 
                 self.response.out.write(input)
                 return
