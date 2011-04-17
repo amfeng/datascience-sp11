@@ -97,3 +97,16 @@ CREATE TABLE IF NOT EXISTS responsetimes (
     ResponseTime INT(15)
 );
 
+CREATE TABLE IF NOT EXISTS aggregate_responsetimes (
+    QuestionId INT,
+    Tag VARCHAR(255),
+    AverageResponseTime INT(15),
+    FastestResponseTime INT(15)
+);
+
+CREATE TABLE IF NOT EXISTS correct_responsetimes (
+    QuestionId INT,
+    Tag VARCHAR(255),
+    CorrectResponseTime INT(15)
+);
+
