@@ -10,6 +10,20 @@ class MainHandler(webapp.RequestHandler):
         self.response.out.write(template.render(path, {}))
         #self.render("index.html", title="Stack Overflow Visualizations")
 
+class AnalyzeHandler(webapp.RequestHandler):
+    def get(self):
+        result = {}
+        tags = ["hello", "goodbye", "yay"]
+        result["tags"] = tags 
+        suggest = ["Do something, something, something.", "It helps if you do this.", "Blah blah blah blah! Yay!"]
+        result["suggest"] = suggest
+        result["respTime"] = 10
+        data = simplejson.dumps(result)
+        if self.request.get("callback"):
+            data = "%s(%s)" % (self.request.get("callback"), data)
+            
+        self.response.out.write(data)
+
 class GraphHandler(webapp.RequestHandler):
     def get(self, graph_id):
         path = os.path.join(os.path.dirname(__file__), graph_id + '.html')
@@ -45,7 +59,8 @@ if __name__ == "__main__":
     application = webapp.WSGIApplication([
     (r"/", MainHandler),
     (r"/data/([a-z]+)", DataHandler),
-    (r"/graph/([a-z]+)", GraphHandler)
+    (r"/graph/([a-z]+)", GraphHandler),
+    (r"/analyze", AnalyzeHandler)
     ])
 
     #application.listen(8080)
