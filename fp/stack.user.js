@@ -59,8 +59,8 @@ function main() {
                 analyzeBar.append(suggestions);
                 analyzeBar.append($("<span></span>").css({"display": "block", "margin-top": "1em", "font-weight": "bold", "font-size": "130%"}).html("Predicted Response Time: " + respTime + " minutes."));
 
-
                 $("#notify-options").before(analyzeBar);
+                $("#analyze-button").attr("value", "Reanalyze");
             }, 
             "jsonp"
         );
