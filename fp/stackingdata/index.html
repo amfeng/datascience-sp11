@@ -12,7 +12,7 @@
     <div id="header">
         <h1>Stack Overflow Visualizations</h1>
     </div>
-    <div class="container" style="margin:auto; width: 1000px;">
+    <div class="container">
         <h2>Tag Popularity over the years</h2>
         <div id="normchooser"><a href="#" class="button"><span></span>Normalized</a></div>
         <div class="clear"></div>
@@ -30,6 +30,30 @@
             <a href="#" class="yearscroll right button" id="ys2010">Mar 2010 - Mar 2011</a>
         </div>
     </div>
+    
+    <div class="container">
+        <h2>Average Response Time by Tag</h2>
+        <div id="tagresp-container">
+            <div id="tagresp-iframe">
+                <iframe id="tagresp" scrolling="no" width="950px" height="350px" src="/graph/tagresp"></iframe>  
+            </div>
+        </div>
+    </div>
+
+     <div class="container">
+        <h2>Number of Posts by Hour</h2>
+        <div id="hourly-container">
+            <div id="hourly-iframe">
+                <iframe id="hourly" scrolling="no" width="950px" height="320px" src="/graph/hourly"></iframe>  
+            </div>
+        </div>
+    </div>
+
+
+    <div class="footer">
+Project by <a href="http://www.amberfeng.com">Amber Feng</a> and Franklin Hu, Graph API by <a href="http://vis.stanford.edu/protovis/">Protovis</a>, Data set by <a href="http://datascienc.es">CS194-16 Spring 2011, UC Berkeley</a>
+    </div>
+
   </body>
 </html>
 

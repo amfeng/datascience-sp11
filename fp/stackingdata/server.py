@@ -57,8 +57,9 @@ class DataHandler(webapp.RequestHandler):
                 data["data"] = input
         elif data_id == "tagresp":
             input = open(os.path.join(os.path.dirname(__file__), "data/tagresp_20.json")).read()
-            self.response.out.write(input)
-            return
+            input = simplejson.loads(input)["data"]
+            data = map(lambda x: 10**x, input)
+            data = {"data": data}
         elif data_id == "hourly":
             input = open(os.path.join(os.path.dirname(__file__), "data/postshourly.json")).read()
             self.response.out.write(input)

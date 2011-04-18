@@ -1,5 +1,5 @@
 body {
-    background: #fefefe;
+    background: #efefef;
     padding-top: 2em;
     font-family: Helvetica, Arial, serif;
     color: #666;
@@ -12,12 +12,22 @@ h1, h2, h3 {
 
 h1 { font-size: 2em; }
 h2 { font-size: 1.2em; }
-#header {
-    height: 50px;
-}
 
 iframe {
     border: 0px;
+}
+
+.container {
+    width: 1000px;
+    margin: auto;
+    margin-top: 1em;
+    border: 1px solid #ddd;
+    background: white;
+    padding: 1em;
+}
+
+#header {
+    height: 50px;
 }
 
 #normchooser a {
@@ -26,6 +36,14 @@ iframe {
 }
 
 #yearchooser {
+    text-align: center;
+}
+
+
+div.footer{
+    font-size: 0.9em;
+    margin-top: 1em;
+    margin-bottom: 0.5em;
     text-align: center;
 }
 
