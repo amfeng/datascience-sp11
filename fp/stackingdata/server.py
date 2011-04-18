@@ -59,7 +59,11 @@ class DataHandler(webapp.RequestHandler):
             input = open(os.path.join(os.path.dirname(__file__), "data/tagresp_20.json")).read()
             self.response.out.write(input)
             return
-
+        elif data_id == "hourly":
+            input = open(os.path.join(os.path.dirname(__file__), "data/postshourly.json")).read()
+            self.response.out.write(input)
+            return
+ 
                             
         self.response.out.write(simplejson.dumps(data))
 
