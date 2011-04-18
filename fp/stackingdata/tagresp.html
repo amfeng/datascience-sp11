@@ -50,8 +50,8 @@
                 var vis = new pv.Panel()
                     .width(w)
                     .height(h)
-                    .bottom(20)
-                    .left(50)
+                    .bottom(60)
+                    .left(60)
                     .right(5)
                     .top(5);
                  
@@ -66,6 +66,23 @@
                   .anchor("left").add(pv.Label)
                     .text(function(d) d);
                 
+                /* Y-axis label */
+                vis.add(pv.Label)
+                    .data(["Response Time (min)"])
+                    .left(-35)
+                    .bottom(h/2)
+                    .font("10pt Arial")
+                    .textAlign("center")
+                    .textAngle(-Math.PI/2);
+
+                /* X-axis label */
+                vis.add(pv.Label)
+                    .data(["Tag"])
+                    .left(w/2)
+                    .bottom(-40)
+                    .font("10pt Arial")
+                    .textAlign("center");
+
                 var bar = vis.add(pv.Bar)
                     .data(data)
                     .left(function() x(this.index))

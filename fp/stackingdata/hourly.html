@@ -51,7 +51,7 @@
                 console.log(data);
                 time = ["12am", "1am", "2am", "3am", "4am", "5am", "6am", "7am", "8am", "9am", "10am", "11am", "12pm", "1pm", "2pm", "3pm", "4pm", "5pm", "6pm", "7pm", "8pm", "9pm", "10pm", "11pm"]; 
                 /* Sizing and scales. */
-                var w = 850, 
+                var w = 855, 
                     h = 250,
                     x = pv.Scale.linear(0, 23).range(0, w),
                     y = pv.Scale.linear(0, 100000).range(0, h);
@@ -60,9 +60,9 @@
                 var vis = new pv.Panel()
                     .width(w)
                     .height(h)
-                    .top(30)
+                    .top(60)
                     .left(70)
-                    .right(10)
+                    .right(50)
                     .bottom(5);
 
                 /* Y-axis and ticks. */
@@ -72,6 +72,23 @@
                     .strokeStyle(function(d) d ? "#eee" : "#000")
                   .anchor("left").add(pv.Label)
                     .text(y.tickFormat);
+
+                /* Y-axis label */
+                vis.add(pv.Label)
+                    .data(["Number of Posts"])
+                    .left(-45)
+                    .bottom(h/2)
+                    .font("10pt Arial")
+                    .textAlign("center")
+                    .textAngle(-Math.PI/2);
+
+                /* X-axis label */
+                vis.add(pv.Label)
+                    .data(["Time of Day"])
+                    .left(w/2)
+                    .top(-30)
+                    .font("10pt Arial")
+                    .textAlign("center");
 
                 /* X-axis and ticks. */
                 vis.add(pv.Rule)
