@@ -32,6 +32,9 @@ class GraphHandler(webapp.RequestHandler):
 
 class DataHandler(webapp.RequestHandler):
     def get(self, data_id):
+        def average(list):
+            return reduce(lambda x, y: x+y, list, 0)/len(list)
+
         #Parse and package data
         raw = []
         data = {} 
@@ -52,8 +55,14 @@ class DataHandler(webapp.RequestHandler):
                 
                 data["count"] = count
                 data["data"] = input
-                
+        elif data_id == "tagresp":
+            input = open(os.path.join(os.path.dirname(__file__), "data/tagresp_20.json")).read()
+            self.response.out.write(input)
+            return
+
+                            
         self.response.out.write(simplejson.dumps(data))
+
 
 if __name__ == "__main__":
     application = webapp.WSGIApplication([
