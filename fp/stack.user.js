@@ -38,8 +38,10 @@ function main() {
 
         analyzeBar.css({"background-color": "#FFFCE0", "border": "1px solid #F2ECAA", "padding": "1em", "margin-bottom": "10px"});
         
+        body = $("#wmd-input").val();
+        
         /* Make an ajax call */
-        $.get("http://stackingdata.appspot.com/analyze", { },
+        $.get("http://stackingdata.appspot.com/analyze", {"body": body },
             function(data){
                 tags = data["tags"];
                 suggest = data["suggest"];

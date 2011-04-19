@@ -13,15 +13,37 @@ class MainHandler(webapp.RequestHandler):
 class AnalyzeHandler(webapp.RequestHandler):
     def get(self):
         result = {}
-        tags = ["hello", "goodbye", "yay"]
-        result["tags"] = tags 
+        suggesttags = []
         suggest = ["Do something, something, something.", "It helps if you do this.", "Blah blah blah blah! Yay!"]
+       
+        body = self.request.get("body")
+
+        commonwords = open(os.path.join(os.path.dirname(__file__), "data/englishwords.json")).read()
+        commonwords = simplejson.loads(commonwords)
+
+        tags = open(os.path.join(os.path.dirname(__file__), "data/tags_hash.json")).read()
+        tags = simplejson.loads(tags)["data"]
+
+        commonwords = frozenset(commonwords)
+        body_words = set(body.lower().split())
+        keywords = body_words.difference(commonwords)
+
+        for word in keywords:
+            # Compare them to the tags
+            if word in tags:
+                # Add to tag suggestions
+                suggesttags.append(word)
+
+        result["tags"] = suggesttags 
         result["suggest"] = suggest
         result["respTime"] = 10
+
         data = simplejson.dumps(result)
+
         if self.request.get("callback"):
             data = "%s(%s)" % (self.request.get("callback"), data)
-            
+
+
         self.response.out.write(data)
 
 class GraphHandler(webapp.RequestHandler):
