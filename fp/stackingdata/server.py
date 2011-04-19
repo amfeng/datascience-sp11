@@ -13,10 +13,19 @@ class MainHandler(webapp.RequestHandler):
 class AnalyzeHandler(webapp.RequestHandler):
     def get(self):
         result = {}
-        suggesttags = []
+        suggesttags = [] 
         suggest = ["Do something, something, something.", "It helps if you do this.", "Blah blah blah blah! Yay!"]
        
         body = self.request.get("body")
+        tagnames = self.request.get("tagnames")
+
+        # If there are no commas, likely that tags are delimited by spaces
+        if "," not in tagnames:
+            existingtags = tagnames.split(" ")
+        # Else, there are probably commas so separate on those
+        else:
+            existingtags = tagnames.replace(" ", "").split(",")
+
 
         commonwords = open(os.path.join(os.path.dirname(__file__), "data/englishwords.json")).read()
         commonwords = simplejson.loads(commonwords)
@@ -33,6 +42,8 @@ class AnalyzeHandler(webapp.RequestHandler):
             if word in tags:
                 # Add to tag suggestions
                 suggesttags.append(word)
+        
+        suggesttags = list(set(suggesttags).difference(set(existingtags)))
 
         result["tags"] = suggesttags 
         result["suggest"] = suggest
